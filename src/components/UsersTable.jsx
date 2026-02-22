@@ -27,9 +27,13 @@ export default function UsersTable({ users }) {
                 <td className="hide-sm">{u.email}</td>
                 <td className="hide-sm">{u.company?.name || "—"}</td>
                 <td className="right">
-                    <Link to={`/users/${u.id}`} className="btn btn--ghost">
+                <Link
+                    to={`/users/${u.id}`}
+                    state={{ user: u }}
+                    className="btn btn--ghost"
+                    >
                     Details
-                    </Link>
+                </Link>
                 </td>
                 </tr>
             ))}

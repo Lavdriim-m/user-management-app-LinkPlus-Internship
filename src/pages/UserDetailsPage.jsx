@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 
 // We'll refetch the full list quickly on this page too (simple approach)
 // In a bigger app you'd share state, but this is totally fine for the challenge.
@@ -11,6 +11,8 @@ export default function UserDetailsPage() {
     const [users, setUsers] = useState([]);
     const [status, setStatus] = useState("loading");
     const [error, setError] = useState("");
+    const location = useLocation();
+    const stateUser = location.state?.user;
 
     useEffect(() => {
         let mounted = true;
@@ -30,9 +32,10 @@ export default function UserDetailsPage() {
     }, []);
 
     const user = useMemo(() => {
+        if (stateUser) return stateUser;
         const numId = Number(id);
         return users.find((u) => u.id === numId);
-    }, [users, id]);
+    }, [users, id, stateUser]);
 
     if (status === "loading") {
         return <div className="card">Loading user…</div>;
